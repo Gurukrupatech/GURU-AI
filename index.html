@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#020607">
+
+<title>SWITY AI</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap');
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  background:#020607;
+  color:#fff;
+}
+
+body{
+  font-family:Rajdhani,Arial,sans-serif;
+  overflow-x:hidden;
+}
+
+button{
+  font-family:inherit;
+}
+
+.app{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 64% 44%,#063d36 0,#021817 18%,transparent 39%),
+    radial-gradient(circle at 92% 5%,#073c45 0,transparent 24%),
+    linear-gradient(150deg,#061015,#020607 65%,#010405);
+}
+
+.app:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.13;
+  background:
+    linear-gradient(90deg,#00eaff0b 1px,transparent 1px),
+    linear-gradient(#00eaff0b 1px,transparent 1px);
+  background-size:30px 30px;
+}
+
+.wrap{
+  position:relative;
+  z-index:1;
+  width:min(560px,100%);
+  margin:auto;
+  padding:8px 14px 16px;
+}
+
+/* TOP */
+.top{
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font:bold 15px Arial;
+  color:#eee;
+}
+
+.topright{
+  font-size:10px;
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+.battery{
+  width:24px;
+  height:12px;
+  border:1px solid #aaa;
+  border-radius:3px;
+  display:block;
+}
+
+.battery:after{
+  content:"";
+  display:block;
+  width:3px;
+  height:5px;
+  background:#aaa;
+  position:absolute;
+  margin:2px 0 0 24px;
+}
+
+.battery i{
+  display:block;
+  width:68%;
+  height:100%;
+  background:#eee;
+}
+
+/* HEADER */
+header{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #00ff8850;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.brandIcon{
+  width:39px;
+  height:39px;
+  border-radius:50%;
+  border:1px solid #00f6a0;
+  display:grid;
+  place-items:center;
+  color:#00f6a0;
+  box-shadow:0 0 15px #00f6a055;
+  font-size:19px;
+}
+
+.brand h1{
+  font:800 18px Orbitron;
+  margin:0;
+  letter-spacing:1px;
+}
+
+.brand h1 span{
+  color:#00eaff;
+}
+
+.brand small{
+  font:700 7px Orbitron;
+  letter-spacing:2.5px;
+  color:#00ff91;
+}
+
+.gear{
+  width:43px;
+  height:43px;
+  border:0;
+  border-radius:11px;
+  background:#00f47d;
+  color:#00170b;
+  font-size:21px;
+}
+
+/* TRANSCRIPT */
+.trans{
+  margin-top:12px;
+  border:2px solid #00ff8a;
+  border-radius:16px;
+  padding:12px 13px;
+  background:#03100edb;
+  box-shadow:0 0 17px #00ff8820;
+}
+
+.transTitle{
+  font:800 10px Orbitron;
+  color:#00ff91;
+  letter-spacing:1px;
+}
+
+.transGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:8px;
+}
+
+.cap{
+  font:800 9px Orbitron;
+  color:#00ff91;
+}
+
+.small{
+  font-size:12px;
+  line-height:1.18;
+  margin-top:5px;
+}
+
+.small.user{
+  text-align:right;
+}
+
+/* MAIN */
+.hero{
+  position:relative;
+  display:grid;
+  grid-template-columns:155px 1fr;
+  gap:3px;
+  margin-top:9px;
+  min-height:300px;
+}
+
+.side{
+  padding-top:38px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  position:relative;
+  z-index:2;
+}
+
+.side button{
+  height:42px;
+  border-radius:15px;
+  background:#04100fca;
+  font:800 10px Orbitron;
+  text-align:left;
+  padding-left:11px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  box-shadow:0 0 8px #000;
+  cursor:pointer;
+}
+
+.side button:after{
+  content:"";
+  height:2px;
+  flex:1;
+  opacity:.75;
+}
+
+.side .memory{
+  color:#00eaff;
+  border:1.5px solid #00eaff;
+}
+
+.side .chat{
+  color:#ff7824;
+  border:1.5px solid #ff7824;
+}
+
+.side .soul{
+  color:#fff;
+  border:1.5px solid #fff;
+}
+
+.side .settings{
+  color:#00ff83;
+  border:1.5px solid #00ff83;
+}
+
+.round{
+  width:23px;
+  height:23px;
+  border:1px solid currentColor;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:11px;
+}
+
+.side .memory:after{
+  background:#00eaff;
+}
+
+.side .chat:after{
+  background:#ff7824;
+}
+
+.side .soul:after{
+  background:#fff;
+}
+
+.side .settings:after{
+  background:#00ff83;
+}
+
+/* GLOBE */
+.core{
+  position:relative;
+  height:300px;
+}
+
+.core canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+.speak{
+  position:absolute;
+  bottom:26px;
+  width:100%;
+  text-align:center;
+  font:800 8px Orbitron;
+  letter-spacing:2px;
+  color:#fff;
+}
+
+.controls{
+  position:absolute;
+  bottom:0;
+  right:0;
+  display:flex;
+  gap:8px;
+}
+
+.stop{
+  height:39px;
+  padding:0 18px;
+  border-radius:20px;
+  border:2px solid #ff2c96;
+  background:#10030b;
+  color:#fff;
+  font:800 9px Orbitron;
+  cursor:pointer;
+}
+
+.repeat{
+  width:39px;
+  height:39px;
+  border-radius:12px;
+  border:1px solid #00eaff;
+  background:#042b35;
+  color:#00eaff;
+  font-size:17px;
+  cursor:pointer;
+}
+
+/* LOWER */
+.lower{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:5px;
+}
+
+.box{
+  min-height:170px;
+  border:1px solid #00eaff55;
+  border-radius:14px;
+  background:#020c0fdd;
+  padding:12px;
+}
+
+.box h2{
+  font:800 10px Orbitron;
+  margin:0;
+  color:#fff;
+}
+
+.box h2 span{
+  color:#00eaff;
+}
+
+.news{
+  font-size:10px;
+  font-weight:700;
+  padding:9px 0;
+  border-bottom:1px solid #ffffff14;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.news:before{
+  content:"";
+  display:inline-block;
+  width:3px;
+  height:11px;
+  background:#00eaff;
+  margin-right:7px;
+  border-radius:3px;
+}
+
+.more{
+  color:#00eaff;
+  font-size:9px;
+  font-weight:800;
+  margin-top:10px;
+}
+
+.taskbar{
+  height:6px;
+  background:#06343b;
+  border-radius:8px;
+  margin:13px 0;
+}
+
+.taskbar i{
+  display:block;
+  width:48%;
+  height:100%;
+  background:#00eaff;
+  border-radius:8px;
+}
+
+.task{
+  font-size:10px;
+  margin:13px 0;
+}
+
+.task:before{
+  content:"◦";
+  color:#00ff9d;
+  margin-right:6px;
+}
+
+.footer{
+  text-align:center;
+  font:700 8px Orbitron;
+  color:#00eaff;
+  letter-spacing:1.5px;
+  margin-top:8px;
+}
+
+/* MODAL */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  z-index:20;
+}
+
+.overlay.show{
+  display:flex;
+}
+
+.modal{
+  width:min(470px,100%);
+  max-height:88vh;
+  overflow:auto;
+  border:1px solid #00eaff;
+  border-radius:18px;
+  background:#041014;
+  padding:16px;
+}
+
+.modal h2{
+  font:800 14px Orbitron;
+  color:#00eaff;
+}
+
+.close{
+  float:right;
+  background:#071a1e;
+  border:1px solid #31545b;
+  color:#fff;
+  border-radius:8px;
+  padding:7px 10px;
+}
+
+.field{
+  margin:13px 0;
+}
+
+.field label{
+  display:flex;
+  justify-content:space-between;
+  color:#00ff91;
+  font-weight:700;
+  font-size:13px;
+}
+
+.field input,
+.field select,
+.chatInput input{
+  width:100%;
+  margin-top:7px;
+  background:#020a0d;
+  color:#fff;
+  border:1px solid #28545c;
+  border-radius:9px;
+  padding:9px;
+}
+
+.save{
+  width:100%;
+  margin-top:8px;
+  border:0;
+  border-radius:10px;
+  padding:11px;
+  background:#00ef82;
+  color:#00140b;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.chatBox{
+  height:42vh;
+  overflow:auto;
+}
+
+.bubble{
+  padding:9px;
+  border:1px solid #00eaff33;
+  background:#05232a;
+  border-radius:10px;
+  margin:7px 0;
+  font-size:12px;
+}
+
+.chatInput{
+  display:flex;
+  gap:6px;
+}
+
+.chatInput input{
+  flex:1;
+}
+
+.chatInput button{
+  width:46px;
+  border-radius:9px;
+  border:1px solid #00eaff;
+  background:#05232a;
+  color:#00eaff;
+}
+
+/* MOBILE */
+@media(max-width:430px){
+
+  .wrap{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .hero{
+    grid-template-columns:142px 1fr;
+    min-height:292px;
+  }
+
+  .side{
+    padding-top:38px;
+  }
+
+  .side button{
+    height:41px;
+    font-size:9px;
+  }
+
+  .core{
+    height:292px;
+  }
+
+  .lower{
+    gap:8px;
+  }
+
+  .box{
+    padding:10px;
+  }
+
+  .small{
+    font-size:11px;
+  }
+}
+
+@media(max-width:370px){
+
+  .hero{
+    grid-template-columns:132px 1fr;
+  }
+
+  .side button{
+    font-size:8px;
+  }
+
+  .lower{
+    grid-template-columns:1fr;
+  }
+
+  .box{
+    min-height:130px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="wrap">
+
+<div class="top">
+  <span id="clock">10:45</span>
+  <span class="topright">
+    ⌁ Vo LTE ▮▮
+    <span class="battery"><i></i></span>
+  </span>
+</div>
+
+<header>
+
+  <div class="brand">
+
+    <div class="brandIcon">
+      ◉
+    </div>
+
+    <div>
+      <h1>SWITY <span>AI</span></h1>
+      <small>SMART ASSISTANT</small>
+    </div>
+
+  </div>
+
+  <button class="gear" onclick="openSettings()">⚙</button>
+
+</header>
+
+
+<!-- TRANSCRIPT -->
+
+<section class="trans">
+
+  <div class="transTitle">
+    TRANSCRIPT
+  </div>
+
+  <div class="transGrid">
+
+    <div>
+
+      <div class="cap">
+        SWITY AI
+      </div>
+
+      <div class="small" id="aiText">
+        Hello Boss! 😊 Main Swity AI hoon.
+        Aaj main aapki kya sahayata kar sakti hoon?
+      </div>
+
+    </div>
+
+    <div>
+
+      <div class="cap" style="text-align:right">
+        YOU
+      </div>
+
+      <div class="small user" id="userText">
+        Hello Boss!
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MAIN AREA -->
+
+<section class="hero">
+
+  <div class="side">
+
+    <button
+      class="memory"
+      onclick="openMemory()">
+
+      <span class="round">◉</span>
+      MEMORY
+
+    </button>
+
+
+    <button
+      class="chat"
+      onclick="openChat()">
+
+      <span class="round">▣</span>
+      CHAT
+
+    </button>
+
+
+    <button
+      class="soul"
+      onclick="openSoul()">
+
+      <span class="round">✦</span>
+      SOUL
+
+    </button>
+
+
+    <button
+      class="settings"
+      onclick="openSettings()">
+
+      <span class="round">⚙</span>
+      SETTINGS
+
+    </button>
+
+  </div>
+
+
+  <div class="core">
+
+    <canvas id="globe"></canvas>
+
+    <div
+      class="speak"
+      id="state">
+
+      READY
+
+    </div>
+
+
+    <div class="controls">
+
+      <button
+        class="stop"
+        onclick="stopVoice()">
+
+        ■ STOP
+
+      </button>
+
+      <button
+        class="repeat"
+        onclick="repeatVoice()">
+
+        🔊
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- HEADLINES + TASKS -->
+
+<section class="lower">
+
+  <div class="box">
+
+    <h2>
+      <span>TODAY HEADLINES</span> ›
+    </h2>
+
+    <div class="news">
+      Fox Business | Business News...
+    </div>
+
+    <div class="news">
+      AI News Today: Latest Updates...
+    </div>
+
+    <div class="news">
+      World News: Latest & Breaking...
+    </div>
+
+    <div class="news">
+      Business News - Latest Headlines...
+    </div>
+
+    <div class="more">
+      +1 MORE
+    </div>
+
+  </div>
+
+
+  <div class="box">
+
+    <h2>
+      TODAY TASKS 2 left 🔥 ›
+    </h2>
+
+    <div class="taskbar">
+      <i></i>
+    </div>
+
+    <div class="task">
+      Release desktop version
+    </div>
+
+    <div class="task">
+      Upload video to TikTok
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="footer">
+  CREATE BY SHIV SONUNE
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+  class="overlay"
+  id="overlay">
+
+  <div
+    class="modal"
+    id="modal">
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   SWITY AI SETTINGS
+================================ */
+
+let cfg =
+JSON.parse(
+  localStorage.getItem("swityCfg") || "null"
+) || {
+
+  lang:"Marathi",
+
+  speed:.92,
+
+  pitch:1.15,
+
+  volume:1,
+
+  auto:true
+
+};
+
+
+let voices=[];
+
+let lastText =
+"Hello Boss! 😊 Main Swity AI hoon. Aaj main aapki kya sahayata kar sakti hoon?";
+
+
+/* VOICES */
+
+function loadVoices(){
+
+  voices =
+    speechSynthesis.getVoices() || [];
+
+}
+
+loadVoices();
+
+speechSynthesis.onvoiceschanged =
+loadVoices;
+
+
+/* FIND BEST AVAILABLE VOICE */
+
+function bestVoice(lang){
+
+  let b =
+    lang
+      .split("-")[0]
+      .toLowerCase();
+
+  return voices.find(
+
+    v =>
+
+    v.lang
+      .toLowerCase()
+      .startsWith(b)
+
+    &&
+
+    /female|zira|samantha|heera|neerja|veena|google|microsoft/i
+      .test(v.name)
+
+  )
+
+  ||
+
+  voices.find(
+
+    v =>
+    v.lang
+      .toLowerCase()
+      .startsWith(b)
+
+  );
+
+}
+
+
+/* SPEAK */
+
+function speak(text){
+
+  if(!("speechSynthesis" in window)){
+
+    alert(
+      "Chrome browser madhye Voice use kara."
+    );
+
+    return;
+
+  }
+
+  speechSynthesis.cancel();
+
+  loadVoices();
+
+  let lang =
+
+    cfg.lang === "Marathi"
+
+      ? "mr-IN"
+
+      :
+
+    cfg.lang === "Hindi"
+
+      ? "hi-IN"
+
+      :
+
+      "en-IN";
+
+
+  let u =
+    new SpeechSynthesisUtterance(text);
+
+
+  u.lang=lang;
+
+  u.rate=cfg.speed;
+
+  u.pitch=cfg.pitch;
+
+  u.volume=cfg.volume;
+
+
+  let v=bestVoice(lang);
+
+  if(v){
+
+    u.voice=v;
+
+  }
+
+
+  u.onstart=()=>{
+
+    document.getElementById(
+      "state"
+    ).textContent="SPEAKING";
+
+  };
+
+
+  u.onend=()=>{
+
+    document.getElementById(
+      "state"
+    ).textContent="READY";
+
+  };
+
+
+  u.onerror=()=>{
+
+    document.getElementById(
+      "state"
+    ).textContent="READY";
+
+  };
+
+
+  speechSynthesis.speak(u);
+
+}
+
+
+/* REPEAT */
+
+function repeatVoice(){
+
+  speak(lastText);
+
+}
+
+
+/* STOP */
+
+function stopVoice(){
+
+  speechSynthesis.cancel();
+
+  document.getElementById(
+    "state"
+  ).textContent="READY";
+
+}
+
+
+/* SWITY RESPONSE */
+
+function answer(q){
+
+  q=q.toLowerCase();
+
+
+  if(
+    /hello|hi|hey/.test(q)
+  ){
+
+    return:
+
+  }
+
+
+  if(
+    /hello|hi|hey/.test(q)
+  ){
+
+    return
+      "Hello Boss! 😊 Chhan vatla tumhi aalat. Sang na, aaj kay karaycha aahe?";
+
+  }
+
+
+  if(
+    q.includes("trading")
+  ){
+
+    return
+      "Ho Boss 😊 Trading mi tumhala simple ani step by step samjavun sangte.";
+
+  }
+
+
+  if(
+    q.includes("who are")
+    ||
+    q.includes("kon ahes")
+  ){
+
+    return
+      "Mi Swity AI aahe — GurukrupaTech chi friendly smart AI assistant.";
+
+  }
+
+
+  return
+    "Ho Boss 😊 Samajla. Sang na, nemka kay help pahije? Mi friendly way ne help karte.";
+
+}
+
+
+/* REPLY */
+
+function reply(text){
+
+  document.getElementById(
+    "userText"
+  ).textContent=text;
+
+
+  lastText=answer(text);
+
+
+  document.getElementById(
+    "aiText"
+  ).textContent=lastText;
+
+
+  if(cfg.auto){
+
+    speak(lastText);
+
+  }
+
+}
+
+
+/* MODAL */
+
+function openModal(html){
+
+  document.getElementById(
+    "modal"
+  ).innerHTML=html;
+
+
+  document.getElementById(
+    "overlay"
+  ).classList.add("show");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById(
+    "overlay"
+  ).classList.remove("show");
+
+}
+
+
+/* SETTINGS */
+
+function openSettings(){
+
+  openModal(`
+
+    <button
+      class="close"
+      onclick="closeModal()">
+
+      ✕
+
+    </button>
+
+
+    <h2>
+      SWITY AI CONTROL CENTER
+    </h2>
+
+
+    <div class="field">
+
+      <label>
+        Language
+      </label>
+
+      <select id="lang">
+
+        <option>Marathi</option>
+
+        <option>Hindi</option>
+
+        <option>English</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Voice Speed
+      </label>
+
+      <input
+        id="speed"
+        type="range"
+        min=".75"
+        max="1.15"
+        step=".01"
+        value="${cfg.speed}">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Voice Pitch
+      </label>
+
+      <input
+        id="pitch"
+        type="range"
+        min=".9"
+        max="1.3"
+        step=".01"
+        value="${cfg.pitch}">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Volume
+      </label>
+
+      <input
+        id="vol"
+        type="range"
+        min="0"
+        max="1"
+        step=".05"
+        value="${cfg.volume}">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+
+        Auto Speak
+
+        <input
+          id="auto"
+          type="checkbox"
+          ${cfg.auto ? "checked" : ""}>
+
+      </label>
+
+    </div>
+
+
+    <button
+      class="save"
+      onclick="saveSettings()">
+
+      SAVE SETTINGS
+
+    </button>
+
+
+    <button
+      class="save"
+      style="background:#00eaff"
+      onclick="testVoice()">
+
+      TEST FRIENDLY VOICE
+
+    </button>
+
+  `);
+
+
+  document.getElementById(
+    "lang"
+  ).value=cfg.lang;
+
+}
+
+
+/* SAVE SETTINGS */
+
+function saveSettings(){
+
+  cfg={
+
+    lang:
+      document.getElementById(
+        "lang"
+      ).value,
+
+    speed:
+      +document.getElementById(
+        "speed"
+      ).value,
+
+    pitch:
+      +document.getElementById(
+        "pitch"
+      ).value,
+
+    volume:
+      +document.getElementById(
+        "vol"
+      ).value,
+
+    auto:
+      document.getElementById(
+        "auto"
+      ).checked
+
+  };
+
+
+  localStorage.setItem(
+    "swityCfg",
+    JSON.stringify(cfg)
+  );
+
+
+  closeModal();
+
+}
+
+
+/* TEST VOICE */
+
+function testVoice(){
+
+  let text;
+
+
+  if(cfg.lang==="Marathi"){
+
+    text =
+      "Hello Boss! 😊 Mi Swity AI aahe. Tumhala help karayla mi ready aahe.";
+
+  }
+
+  else if(cfg.lang==="Hindi"){
+
+    text =
+      "Hello Boss! 😊 Main Swity AI hoon. Aapki help karne ke liye ready hoon.";
+
+  }
+
+  else{
+
+    text =
+      "Hello Boss! 😊 I am Swity AI. I am ready to help you.";
+
+  }
+
+
+  speak(text);
+
+}
+
+
+/* MEMORY */
+
+function openMemory(){
+
+  openModal(`
+
+    <button
+      class="close"
+      onclick="closeModal()">
+
+      ✕
+
+    </button>
+
+    <h2>
+      MEMORY
+    </h2>
+
+    <div class="bubble">
+
+      Swity AI memory is ready.
+      Your saved conversations will appear here.
+
+    </div>
+
+  `);
+
+}
+
+
+/* SOUL */
+
+function openSoul(){
+
+  openModal(`
+
+    <button
+      class="close"
+      onclick="closeModal()">
+
+      ✕
+
+    </button>
+
+    <h2>
+      SOUL
+    </h2>
+
+    <div class="bubble">
+
+      Hello Boss! 😊
+
+      Mi Swity AI —
+      tumchi friendly smart AI assistant.
+
+    </div>
+
+  `);
+
+}
+
+
+/* CHAT */
+
+function openChat(){
+
+  openModal(`
+
+    <button
+      class="close"
+      onclick="closeModal()">
+
+      ✕
+
+    </button>
+
+    <h2>
+      CHAT
+    </h2>
+
+
+    <div
+      class="chatBox"
+      id="chatBox">
+
+      <div class="bubble">
+
+        Hello Boss! 😊
+        Kay help karu?
+
+      </div>
+
+    </div>
+
+
+    <div class="chatInput">
+
+      <input
+        id="chatInput"
+        placeholder="Type message...">
+
+      <button
+        onclick="sendChat()">
+
+        ➤
+
+      </button>
+
+    </div>
+
+  `);
+
+
+  document.getElementById(
+    "chatInput"
+  ).focus();
+
+}
+
+
+/* CHAT SEND */
+
+function sendChat(){
+
+  let input =
+    document.getElementById(
+      "chatInput"
+    );
+
+
+  let text=input.value.trim();
+
+
+  if(!text)return;
+
+
+  document.getElementById(
+    "chatBox"
+  ).innerHTML +=
+
+    `<div class="bubble">
+      ${text}
+    </div>`;
+
+
+  reply(text);
+
+
+  document.getElementById(
+    "chatBox"
+  ).innerHTML +=
+
+    `<div class="bubble">
+      ${lastText}
+    </div>`;
+
+
+  input.value="";
+
+
+  document.getElementById(
+    "chatBox"
+  ).scrollTop=
+
+    document.getElementById(
+      "chatBox"
+    ).scrollHeight;
+
+}
+
+
+/* CLOSE MODAL */
+
+document
+  .getElementById("overlay")
+  .onclick=function(e){
+
+    if(
+      e.target ===
+      document.getElementById("overlay")
+    ){
+
+      closeModal();
+
+    }
+
+  };
+
+
+/* CLOCK */
+
+setInterval(()=>{
+
+  document.getElementById(
+    "clock"
+  ).textContent=
+
+    new Date().toLocaleTimeString(
+      [],
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+},1000);
+
+
+/* ==================================
+   HOLOGRAPHIC SWITY GLOBE
+================================== */
+
+const canvas =
+  document.getElementById("globe");
+
+const ctx =
+  canvas.getContext("2d");
+
+let dots=[];
+
+
+for(
+  let i=0;
+  i<360;
+  i++
+){
+
+  dots.push({
+
+    a:
+      Math.random() *
+      Math.PI * 2,
+
+    b:
+      (Math.random()-.5)*2
+
+  });
+
+}
+
+
+function resize(){
+
+  canvas.width =
+    canvas.clientWidth*2;
+
+  canvas.height =
+    canvas.clientHeight*2;
+
+  ctx.setTransform(
+    2,0,0,2,0,0
+  );
+
+}
+
+
+addEventListener(
+  "resize",
+  resize
+);
+
+
+resize();
+
+
+let rot=0;
+
+
+function draw(){
+
+  let w=canvas.clientWidth;
+
+  let h=canvas.clientHeight;
+
+
+  ctx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+
+  let cx=w*.55;
+
+  let cy=h*.43;
+
+  let r=Math.min(w,h)*.37;
+
+
+  /* OUTER GLOBE */
+
+  ctx.beginPath();
+
+  ctx.arc(
+    cx,
+    cy,
+    r,
+    0,
+    Math.PI*2
+  );
+
+  ctx.strokeStyle="#00eaff99";
+
+  ctx.lineWidth=1.5;
+
+  ctx.stroke();
+
+
+  /* LATITUDE LINES */
+
+  for(
+    let k=-2;
+    k<=2;
+    k++
+  ){
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+
+      cx,
+      cy,
+
+      r*Math.max(
+        .18,
+        Math.abs(
+          Math.cos(k*.55)
+        )
+      ),
+
+      r,
+
+      0,
+
+      0,
+      7
+
+    );
+
+    ctx.strokeStyle="#00eaff55";
+
+    ctx.stroke();
+
+  }
+
+
+  rot+=.006;
+
+
+  /* PARTICLES */
+
+  dots.forEach(
+    (p,i)=>{
+
+      let lon=
+        p.a+rot;
+
+      let lat=
+        p.b*.72;
+
+
+      let z=
+        Math.cos(lat)*
+        Math.cos(lon);
+
+
+      if(z<-.12)return;
+
+
+      let px=
+        cx+
+        r*
+        Math.cos(lat)*
+        Math.sin(lon);
+
+
+      let py=
+        cy+
+        r*
+        Math.sin(lat);
+
+
+      ctx.fillStyle=
+        i%3
+          ? "#00eaff"
+          : "#ffe64a";
+
+
+      ctx.globalAlpha=
+        .35+z*.6;
+
+
+      ctx.fillRect(
+        px,
+        py,
+        1.5,
+        1.5
+      );
+
+    }
+  );
+
+
+  ctx.globalAlpha=1;
+
+
+  /* GOLD ORBIT */
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+
+    cx,
+    cy,
+
+    r*.38,
+    r,
+
+    rot,
+
+    0,
+    Math.PI*2
+
+  );
+
+  ctx.strokeStyle="#ffe15a99";
+
+  ctx.stroke();
+
+
+  requestAnimationFrame(draw);
+
+}
+
+
+draw();
+
+
+/* ==================================
+   MICROPHONE
+================================== */
+
+function startMic(){
+
+  let SR =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+
+  if(!SR){
+
+    alert(
+      "Chrome browser madhye microphone use kara."
+    );
+
+    return;
+
+  }
+
+
+  let r =
+    new SR();
+
+
+  r.lang=
+
+    cfg.lang==="Marathi"
+
+      ? "mr-IN"
+
+      :
+
+    cfg.lang==="Hindi"
+
+      ? "hi-IN"
+
+      :
+
+      "en-IN";
+
+
+  r.interimResults=false;
+
+  r.continuous=false;
+
+
+  r.onstart=()=>{
+
+    document.getElementById(
+      "state"
+    ).textContent="LISTENING";
+
+  };
+
+
+  r.onresult=e=>{
+
+    reply(
+      e.results[0][0]
+        .transcript
+    );
+
+  };
+
+
+  r.onerror=()=>{
+
+    alert(
+      "Microphone permission allow kara."
+    );
+
+  };
+
+
+  r.onend=()=>{
+
+    if(
+      document.getElementById(
+        "state"
+      ).textContent ===
+      "LISTENING"
+    ){
+
+      document.getElementById(
+        "state"
+      ).textContent="READY";
+
+    }
+
+  };
+
+
+  r.start();
+
+}
+
+</script>
+
+</body>
+</html>
